@@ -8,6 +8,9 @@
         <dependent-module archiveName="com.vroomerp-VroomERPCommon-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/VroomERPCommon/VroomERPCommon">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="org.mindrot-jbcrypt-0.4.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="com.vroomerp-VroomERPJPA-1.0.0-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/VroomERPJPA/VroomERPJPA">
             <dependency-type>uses</dependency-type>
         </dependent-module>

@@ -16,18 +16,18 @@ public class TRuoloUtente implements Serializable {
 
 	@Id
 	@Column(name="ruolo_utente_id")
-	private int ruoloUtenteId;
+	private Integer ruoloUtenteId;
 
 	private String descrizione;
 
 	public TRuoloUtente() {
 	}
 
-	public int getRuoloUtenteId() {
+	public Integer getRuoloUtenteId() {
 		return this.ruoloUtenteId;
 	}
 
-	public void setRuoloUtenteId(int ruoloUtenteId) {
+	public void setRuoloUtenteId(Integer ruoloUtenteId) {
 		this.ruoloUtenteId = ruoloUtenteId;
 	}
 

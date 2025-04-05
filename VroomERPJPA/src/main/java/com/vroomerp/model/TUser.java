@@ -21,6 +21,7 @@ public class TUser implements Serializable {
 
 	private String cognome;
 
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 
 	@Column(name="ext_ruolo_utente_id")
@@ -32,8 +33,6 @@ public class TUser implements Serializable {
 	private String nome;
 
 	private String password;
-
-	private String ruolo;
 
 	private String telefono;
 
@@ -96,13 +95,6 @@ public class TUser implements Serializable {
 		this.password = password;
 	}
 
-	public String getRuolo() {
-		return this.ruolo;
-	}
-
-	public void setRuolo(String ruolo) {
-		this.ruolo = ruolo;
-	}
 
 	public String getTelefono() {
 		return this.telefono;
