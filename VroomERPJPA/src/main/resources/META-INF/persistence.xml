@@ -1,0 +1,15 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
+  <persistence-unit name="vroomerpPU" transaction-type="JTA">
+    <jta-data-source>java:jboss/datasources/odyssey</jta-data-source>
+    <class>com.vroomerp.model.TRuoloUtente</class>
+    <class>com.vroomerp.model.TUser</class>
+
+    <!-- Le classi entità verranno aggiunte qui -->
+
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>
