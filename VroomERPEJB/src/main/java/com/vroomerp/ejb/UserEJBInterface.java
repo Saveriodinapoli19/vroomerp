@@ -1,5 +1,7 @@
 package com.vroomerp.ejb;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import com.vroomerp.model.TRuoloUtente;
@@ -17,5 +19,9 @@ public interface UserEJBInterface {
 	TRuoloUtente findByRuoloId(Integer ruoloUtenteId);
 
 	TUser findById(Integer userId);
+
+	TUser deleteUser(TUser user);
+
+	List<TUser> findAll();
 
 }

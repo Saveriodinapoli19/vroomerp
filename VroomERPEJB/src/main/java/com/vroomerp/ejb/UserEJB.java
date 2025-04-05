@@ -32,6 +32,12 @@ public class UserEJB implements UserEJBInterface {
 	}
 	
 	@Override
+	public TUser deleteUser(TUser user) {
+		user.setFlagDeleted(1);
+		return em.merge(user);
+	}
+	
+	@Override
 	public TUser findById(Integer userId) {
 		String query = "SELECT t FROM TUser t WHERE t.userId = :userId AND(t.flagDeleted = 0 OR t.flagDeleted IS NULL) ";
 
@@ -63,6 +69,20 @@ public class UserEJB implements UserEJBInterface {
 
 		try {
 			return str.getSingleResult();
+		} catch (NoResultException e) {
+			return null; 
+		}
+	}
+	
+	@Override 
+	public List<TUser> findAll() {
+		String query = "SELECT t FROM TUser t WHERE t.flagDeleted = 0 OR t.flagDeleted IS NULL";
+
+		TypedQuery<TUser> str = em.createQuery(query, TUser.class);
+		
+
+		try {
+			return str.getResultList();
 		} catch (NoResultException e) {
 			return null; 
 		}
