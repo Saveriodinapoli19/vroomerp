@@ -3,6 +3,15 @@
     <jta-data-source>java:jboss/datasources/odyssey</jta-data-source>
     <class>com.vroomerp.model.TRuoloUtente</class>
     <class>com.vroomerp.model.TUser</class>
+    <class>com.vroomerp.model.TAuto</class>
+    <class>com.vroomerp.model.TMezzo</class>
+    <class>com.vroomerp.model.TMoto</class>
+    <class>com.vroomerp.model.TMotoreEuro</class>
+    <class>com.vroomerp.model.TTipoAlimentazione</class>
+    <class>com.vroomerp.model.TTipoAuto</class>
+    <class>com.vroomerp.model.TTipoMoto</class>
+    <class>com.vroomerp.model.TTipoRimorchio</class>
+    <class>com.vroomerp.model.TTir</class>
 
     <!-- Le classi entità verranno aggiunte qui -->
 
