@@ -49,16 +49,26 @@ public class UserEJB implements UserEJBInterface {
 	}
 
 	
-	@Override
+//	@Override
+//	public TUser findByEmail(String email) {
+//		String query = "SELECT t FROM TUser t WHERE t.email = :email";
+//
+//		TypedQuery<TUser> str = em.createQuery(query, TUser.class);
+//		str.setParameter("email", email);
+//
+//		 List<TUser> results = str.getResultList();
+//		    return results.isEmpty() ? null : results.get(0);
+//	}
+	
 	public TUser findByEmail(String email) {
-		String query = "SELECT t FROM TUser t WHERE t.email = :email";
-
-		TypedQuery<TUser> str = em.createQuery(query, TUser.class);
-		str.setParameter("email", email);
-
-		 List<TUser> results = str.getResultList();
-		    return results.isEmpty() ? null : results.get(0);
+	    String query = "SELECT t FROM TUser t WHERE t.email = :email";
+	    return em.createQuery(query, TUser.class)
+	             .setParameter("email", email)
+	             .getResultStream()
+	             .findFirst()
+	             .orElse(null);
 	}
+
 	
 	@Override
 	public TRuoloUtente findByRuoloId(Integer ruoloUtenteId) {

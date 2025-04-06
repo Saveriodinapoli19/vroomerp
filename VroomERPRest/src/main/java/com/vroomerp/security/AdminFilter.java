@@ -1,5 +1,6 @@
 package com.vroomerp.security;
 
+import com.vroomerp.common.dto.basic.BasicResponse;
 import com.vroomerp.ejb.UserEJB;
 import com.vroomerp.ejb.UserEJBInterface;
 import com.vroomerp.model.TUser;
@@ -26,10 +27,13 @@ public class AdminFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authHeader = requestContext.getHeaderString("Authorization");
-
+        BasicResponse response = new BasicResponse();
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Token mancante").build());
+            
+        	
+        	response.setErrorCode(401);
+        	response.setErrorMessage("Token mancante");
+        	requestContext.abortWith(Response.ok(response).build());
             return;
         }
 
@@ -39,13 +43,15 @@ public class AdminFilter implements ContainerRequestFilter {
 
             TUser user = userEJB.findByEmail(email);
             if (user == null || user.getExtRuoloUtenteId() != ROLE_ADMIN_ID) {
-                requestContext.abortWith(Response.status(Response.Status.FORBIDDEN)
-                        .entity("Accesso riservato agli amministratori").build());
+            	response.setErrorCode(403);
+            	response.setErrorMessage("Operazione consesnita solo agli amministratori");
+            	requestContext.abortWith(Response.ok(response).build());
             }
 
         } catch (Exception e) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Token non valido").build());
+        	response.setErrorCode(401);
+        	response.setErrorMessage("Token non valido o scaduto");
+        	requestContext.abortWith(Response.ok(response).build());
         }
     }
 }

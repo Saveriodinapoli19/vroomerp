@@ -5,6 +5,9 @@ import javax.ws.rs.Priorities;
 import javax.ws.rs.container.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+
+import com.vroomerp.common.dto.basic.BasicResponse;
+
 import java.io.IOException;
 
 @JWTTokenNeeded
@@ -15,9 +18,11 @@ public class JwtFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authHeader = requestContext.getHeaderString("Authorization");
-
+        BasicResponse response = new BasicResponse();
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("Token mancante").build());
+        	response.setErrorCode(401);
+        	response.setErrorMessage("Token mancante");
+        	requestContext.abortWith(Response.ok(response).build());         
             return;
         }
 
@@ -27,7 +32,9 @@ public class JwtFilter implements ContainerRequestFilter {
             String email = JwtUtil.validateToken(token);
             // eventualmente puoi salvare l'email in un contesto
         } catch (Exception e) {
-            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("Token non valido").build());
+        	response.setErrorCode(401);
+        	response.setErrorMessage("Token non valido o scaduto");
+        	requestContext.abortWith(Response.ok(response).build());
         }
     }
 }

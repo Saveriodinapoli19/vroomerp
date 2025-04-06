@@ -73,12 +73,36 @@ public class UserRest {
 
 			user.setExtRuoloUtenteId(ruolo.getRuoloUtenteId());
 
-			TUser searchMail = userEJB.findByEmail(user.getEmail());
-			if (searchMail != null) {
-				response.setErrorCode(1);
-				response.setErrorMessage("Attenzione: email già esistente");
-				return Response.ok(response).build();
+			TUser existingUser = userEJB.findByEmail(user.getEmail()); // include anche deleted
+
+			if (existingUser != null) {
+				if (existingUser.getFlagDeleted() != null && existingUser.getFlagDeleted() == 1) {
+					// Riattivazione utente eliminato
+					existingUser.setFlagDeleted(0);
+					existingUser.setNome(user.getNome());
+					existingUser.setCognome(user.getCognome());
+					existingUser.setTelefono(user.getTelefono());
+					existingUser.setPassword(user.getPassword());
+					existingUser.setExtRuoloUtenteId(user.getExtRuoloUtenteId());
+
+					userEJB.updateUser(existingUser);
+
+					UserBean userBean = new UserBean();
+					BeanUtils.copyProperties(userBean, existingUser);
+
+					response.setUserBean(userBean);
+					response.setErrorCode(0);
+					response.setErrorMessage("Utente riattivato con successo");
+
+					return Response.ok(response).build();
+				} else {
+					// Utente esiste e non è stato eliminato
+					response.setErrorCode(1);
+					response.setErrorMessage("Attenzione: email già esistente");
+					return Response.ok(response).build();
+				}
 			}
+
 
 			userEJB.insertUser(user);
 
