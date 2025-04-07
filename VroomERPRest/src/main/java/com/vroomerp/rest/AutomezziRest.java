@@ -4,7 +4,9 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 
 import com.vroomerp.ejb.AutomezziEJBInterface;
 import com.vroomerp.ejb.UserEJBInterface;
@@ -21,6 +23,9 @@ public class AutomezziRest {
 	
 	@EJB
 	AutomezziEJBInterface automezziEJB;
+	
+	@Context
+	HttpServletRequest httpRequest;
 	
 	
 }

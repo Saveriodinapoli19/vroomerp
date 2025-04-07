@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -27,6 +29,7 @@ import com.vroomerp.common.dto.auth.LoginRequest;
 import com.vroomerp.common.dto.user.UserBean;
 import com.vroomerp.common.dto.user.UserRequest;
 import com.vroomerp.common.dto.user.UserResponse;
+import com.vroomerp.common.util.Md5Generator;
 import com.vroomerp.common.util.PasswordUtil;
 import com.vroomerp.ejb.UserEJBInterface;
 import com.vroomerp.model.TRuoloUtente;
@@ -43,6 +46,9 @@ public class UserRest {
 
 	@EJB
 	UserEJBInterface userEJB;
+
+	@Context
+	HttpServletRequest httpRequest;
 
 	@Admin
 	@JWTTokenNeeded
@@ -61,9 +67,9 @@ public class UserRest {
 			user.setCognome(request.getUserBean().getCognome());
 			user.setEmail(request.getUserBean().getEmail());
 			user.setTelefono(request.getUserBean().getTelefono());
-			String hashed = PasswordUtil.encodePassword(request.getUserBean().getPassword());
-			user.setPassword(hashed);
-
+//			String hashed = PasswordUtil.encodePassword(request.getUserBean().getPassword());
+//			user.setPassword(hashed);
+			Md5Generator.convertPass(request.getUserBean().getPassword());
 			TRuoloUtente ruolo = userEJB.findByRuoloId(request.getUserBean().getExtRuoloUtenteId());
 			if (ruolo == null) {
 				response.setErrorCode(2);
@@ -102,7 +108,6 @@ public class UserRest {
 					return Response.ok(response).build();
 				}
 			}
-
 
 			userEJB.insertUser(user);
 
@@ -233,15 +238,15 @@ public class UserRest {
 				response.setErrorMessage("Attenzione: L'Utente con id [" + userId + "]  non esiste");
 				return Response.ok(response).build();
 			}
-			
+
 			UserBean userBean = new UserBean();
 			BeanUtils.copyProperties(userBean, user);
-			
+
 			TRuoloUtente ruolo = userEJB.findByRuoloId(user.getExtRuoloUtenteId());
 			if (ruolo != null) {
 				userBean.setRuolo(ruolo.getDescrizione());
 			}
-			
+
 			response.setUserBean(userBean);
 			response.setErrorCode(0);
 			response.setErrorMessage("OK");
