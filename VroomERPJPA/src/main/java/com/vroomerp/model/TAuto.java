@@ -22,8 +22,8 @@ public class TAuto implements Serializable {
 	@Column(name="consumo_medio")
 	private Double consumoMedio;
 
-	@Column(name="ext_cilindrata_id")
-	private String extCilindrataId;
+	@Column(name="cilindrata")
+	private String cilindrata;
 
 	@Column(name="ext_motore_euro")
 	private Integer extMotoreEuro;
@@ -65,12 +65,14 @@ public class TAuto implements Serializable {
 		this.consumoMedio = consumoMedio;
 	}
 
-	public String getExtCilindrataId() {
-		return extCilindrataId;
+	
+
+	public String getCilindrata() {
+		return cilindrata;
 	}
 
-	public void setExtCilindrataId(String extCilindrataId) {
-		this.extCilindrataId = extCilindrataId;
+	public void setCilindrata(String cilindrata) {
+		this.cilindrata = cilindrata;
 	}
 
 	public Integer getExtMotoreEuro() {

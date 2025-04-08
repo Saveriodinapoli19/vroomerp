@@ -6,7 +6,7 @@ public class MotoBean {
 	
 	private Integer motoId;
 
-	private Integer extCilindrataId;
+	private String cilindrata;
 
 	private Integer extMotoreEuroId;
 
@@ -30,13 +30,6 @@ public class MotoBean {
 		this.motoId = motoId;
 	}
 
-	public Integer getExtCilindrataId() {
-		return extCilindrataId;
-	}
-
-	public void setExtCilindrataId(Integer extCilindrataId) {
-		this.extCilindrataId = extCilindrataId;
-	}
 
 	public Integer getExtMotoreEuroId() {
 		return extMotoreEuroId;
@@ -92,6 +85,14 @@ public class MotoBean {
 
 	public void setRaffreddamento(String raffreddamento) {
 		this.raffreddamento = raffreddamento;
+	}
+
+	public String getCilindrata() {
+		return cilindrata;
+	}
+
+	public void setCilindrata(String cilindrata) {
+		this.cilindrata = cilindrata;
 	}
 	
 	

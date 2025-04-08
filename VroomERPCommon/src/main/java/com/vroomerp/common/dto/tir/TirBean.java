@@ -20,6 +20,8 @@ public class TirBean {
 	
 	private Double portataMax;
 
+	private String cilindrata;
+	
 	public Integer getTirId() {
 		return tirId;
 	}
@@ -82,6 +84,14 @@ public class TirBean {
 
 	public void setPortataMax(Double portataMax) {
 		this.portataMax = portataMax;
+	}
+
+	public String getCilindrata() {
+		return cilindrata;
+	}
+
+	public void setCilindrata(String cilindrata) {
+		this.cilindrata = cilindrata;
 	}
 	
 	

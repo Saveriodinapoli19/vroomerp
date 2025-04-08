@@ -1,19 +1,25 @@
 package com.vroomerp.common.dto.auto;
 
+import com.vroomerp.common.dto.mezzo.MezzoBean;
+
 public class AutoBean {
 
 	private Integer autoId;
 
 	private Double consumoMedio;
 
-	private String extCilindrataId;
+	
+	private String cilindrata;
 
 	private Integer extMotoreEuro;
-
+	private String motoreEuro;
+		
 	private Integer extTipoAlimentazioneId;
-
+	private String alimentazione;
+	
 	private Integer extTipoAuto;
-
+	private String descTipoAuto;
+	
 	private Integer flagDeleted;
 
 	private Integer numeroPorte;
@@ -21,6 +27,8 @@ public class AutoBean {
 	private Integer numeroPosti;
 
 	private String potenzaKw;
+	
+	private MezzoBean mezzoBean;
 
 	public Integer getAutoId() {
 		return autoId;
@@ -38,12 +46,12 @@ public class AutoBean {
 		this.consumoMedio = consumoMedio;
 	}
 
-	public String getExtCilindrataId() {
-		return extCilindrataId;
+	public String getCilindrata() {
+		return cilindrata;
 	}
 
-	public void setExtCilindrataId(String extCilindrataId) {
-		this.extCilindrataId = extCilindrataId;
+	public void setCilindrata(String cilindrata) {
+		this.cilindrata = cilindrata;
 	}
 
 	public Integer getExtMotoreEuro() {
@@ -54,6 +62,14 @@ public class AutoBean {
 		this.extMotoreEuro = extMotoreEuro;
 	}
 
+	public String getMotoreEuro() {
+		return motoreEuro;
+	}
+
+	public void setMotoreEuro(String motoreEuro) {
+		this.motoreEuro = motoreEuro;
+	}
+
 	public Integer getExtTipoAlimentazioneId() {
 		return extTipoAlimentazioneId;
 	}
@@ -62,12 +78,28 @@ public class AutoBean {
 		this.extTipoAlimentazioneId = extTipoAlimentazioneId;
 	}
 
+	public String getAlimentazione() {
+		return alimentazione;
+	}
+
+	public void setAlimentazione(String alimentazione) {
+		this.alimentazione = alimentazione;
+	}
+
 	public Integer getExtTipoAuto() {
 		return extTipoAuto;
 	}
 
 	public void setExtTipoAuto(Integer extTipoAuto) {
 		this.extTipoAuto = extTipoAuto;
+	}
+
+	public String getDescTipoAuto() {
+		return descTipoAuto;
+	}
+
+	public void setDescTipoAuto(String descTipoAuto) {
+		this.descTipoAuto = descTipoAuto;
 	}
 
 	public Integer getFlagDeleted() {
@@ -102,4 +134,15 @@ public class AutoBean {
 		this.potenzaKw = potenzaKw;
 	}
 
+	public MezzoBean getMezzoBean() {
+		return mezzoBean;
+	}
+
+	public void setMezzoBean(MezzoBean mezzoBean) {
+		this.mezzoBean = mezzoBean;
+	}
+	
+	
+	
+	
 }

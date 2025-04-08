@@ -19,9 +19,6 @@ public class TMoto implements Serializable {
 	@Column(name="moto_id")
 	private Integer motoId;
 
-	@Column(name="ext_cilindrata_id")
-	private Integer extCilindrataId;
-
 	@Column(name="ext_motore_euro_id")
 	private Integer extMotoreEuroId;
 
@@ -43,6 +40,9 @@ public class TMoto implements Serializable {
 
 	@Column(name="tipo_moto_id")
 	private Integer tipoMotoId;
+	
+	@Column(name="cilindrata")
+	private String cilindrata;
 
 	public TMoto() {
 	}
@@ -55,13 +55,6 @@ public class TMoto implements Serializable {
 		this.motoId = motoId;
 	}
 
-	public Integer getExtCilindrataId() {
-		return extCilindrataId;
-	}
-
-	public void setExtCilindrataId(Integer extCilindrataId) {
-		this.extCilindrataId = extCilindrataId;
-	}
 
 	public Integer getExtMotoreEuroId() {
 		return extMotoreEuroId;
@@ -125,6 +118,14 @@ public class TMoto implements Serializable {
 
 	public void setTipoMotoId(Integer tipoMotoId) {
 		this.tipoMotoId = tipoMotoId;
+	}
+
+	public String getCilindrata() {
+		return cilindrata;
+	}
+
+	public void setCilindrata(String cilindrata) {
+		this.cilindrata = cilindrata;
 	}
 
 	

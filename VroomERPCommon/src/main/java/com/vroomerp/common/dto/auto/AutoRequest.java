@@ -3,6 +3,7 @@ package com.vroomerp.common.dto.auto;
 import java.util.List;
 
 import com.vroomerp.common.dto.basic.BasicRequest;
+import com.vroomerp.common.dto.mezzo.MezzoBean;
 
 public class AutoRequest extends BasicRequest {
 
@@ -13,7 +14,8 @@ public class AutoRequest extends BasicRequest {
 
 	private AutoBean autoBean;
 	private List<AutoBean> autoBeanList;
-
+	private MezzoBean mezzoBean;
+	
 	public AutoBean getAutoBean() {
 		return autoBean;
 	}
@@ -28,6 +30,14 @@ public class AutoRequest extends BasicRequest {
 
 	public void setAutoBeanList(List<AutoBean> autoBeanList) {
 		this.autoBeanList = autoBeanList;
+	}
+
+	public MezzoBean getMezzoBean() {
+		return mezzoBean;
+	}
+
+	public void setMezzoBean(MezzoBean mezzoBean) {
+		this.mezzoBean = mezzoBean;
 	}
 
 }
