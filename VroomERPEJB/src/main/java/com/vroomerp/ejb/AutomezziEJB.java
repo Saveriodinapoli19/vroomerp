@@ -10,11 +10,13 @@ import javax.persistence.TypedQuery;
 
 import com.vroomerp.model.TAuto;
 import com.vroomerp.model.TMezzo;
+import com.vroomerp.model.TMoto;
 import com.vroomerp.model.TMotoreEuro;
 import com.vroomerp.model.TTipoAlimentazione;
 import com.vroomerp.model.TTipoAuto;
 import com.vroomerp.model.TTipoMoto;
 import com.vroomerp.model.TTipoRimorchio;
+import com.vroomerp.model.TTir;
 import com.vroomerp.model.TUser;
 
 @Stateless
@@ -165,5 +167,102 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 		em.merge(mezzo);
 		return mezzo;
 	}
+	@Override
+	public List<TAuto> findAllAutoFiltered(String marca, String modello, String targa, Integer limit) {
+	    StringBuilder queryStr = new StringBuilder("SELECT a FROM TAuto a JOIN TMezzo m ON a.autoId = m.autoId WHERE a.flagDeleted = 0");
+
+	    if (marca != null && !marca.isEmpty()) {
+	        queryStr.append(" AND LOWER(m.marca) LIKE LOWER(:marca)");
+	    }
+	    if (modello != null && !modello.isEmpty()) {
+	        queryStr.append(" AND LOWER(m.modello) LIKE LOWER(:modello)");
+	    }
+	    if (targa != null && !targa.isEmpty()) {
+	        queryStr.append(" AND LOWER(m.targa) LIKE LOWER(:targa)");
+	    }
+
+	    TypedQuery<TAuto> query = em.createQuery(queryStr.toString(), TAuto.class);
+
+	    if (marca != null && !marca.isEmpty()) {
+	        query.setParameter("marca", "%" + marca + "%");
+	    }
+	    if (modello != null && !modello.isEmpty()) {
+	        query.setParameter("modello", "%" + modello + "%");
+	    }
+	    if (targa != null && !targa.isEmpty()) {
+	        query.setParameter("targa", "%" + targa + "%");
+	    }
+
+	    if (limit != null && limit > 0) {
+	        query.setMaxResults(limit);
+	    }
+
+	    return query.getResultList();
+	}
+	@Override
+	public List<TMoto> findAllMotoFiltered(String marca, String modello, String targa, Integer limit) {
+	    StringBuilder queryStr = new StringBuilder("SELECT m FROM TMoto m JOIN TMezzo z ON m.motoId = z.motoId WHERE m.flagDeleted = 0");
+
+	    if (marca != null && !marca.isEmpty()) {
+	        queryStr.append(" AND LOWER(z.marca) LIKE LOWER(:marca)");
+	    }
+	    if (modello != null && !modello.isEmpty()) {
+	        queryStr.append(" AND LOWER(z.modello) LIKE LOWER(:modello)");
+	    }
+	    if (targa != null && !targa.isEmpty()) {
+	        queryStr.append(" AND LOWER(z.targa) LIKE LOWER(:targa)");
+	    }
+
+	    TypedQuery<TMoto> query = em.createQuery(queryStr.toString(), TMoto.class);
+
+	    if (marca != null && !marca.isEmpty()) {
+	        query.setParameter("marca", "%" + marca + "%");
+	    }
+	    if (modello != null && !modello.isEmpty()) {
+	        query.setParameter("modello", "%" + modello + "%");
+	    }
+	    if (targa != null && !targa.isEmpty()) {
+	        query.setParameter("targa", "%" + targa + "%");
+	    }
+
+	    if (limit != null && limit > 0) {
+	        query.setMaxResults(limit);
+	    }
+
+	    return query.getResultList();
+	}
+	@Override
+	public List<TTir> findAllTirFiltered(String marca, String modello, String targa, Integer limit) {
+	    StringBuilder queryStr = new StringBuilder("SELECT t FROM TTir t JOIN TMezzo z ON t.tirId = z.tirId WHERE t.flagDeleted = 0");
+
+	    if (marca != null && !marca.isEmpty()) {
+	        queryStr.append(" AND LOWER(z.marca) LIKE LOWER(:marca)");
+	    }
+	    if (modello != null && !modello.isEmpty()) {
+	        queryStr.append(" AND LOWER(z.modello) LIKE LOWER(:modello)");
+	    }
+	    if (targa != null && !targa.isEmpty()) {
+	        queryStr.append(" AND LOWER(z.targa) LIKE LOWER(:targa)");
+	    }
+
+	    TypedQuery<TTir> query = em.createQuery(queryStr.toString(), TTir.class);
+
+	    if (marca != null && !marca.isEmpty()) {
+	        query.setParameter("marca", "%" + marca + "%");
+	    }
+	    if (modello != null && !modello.isEmpty()) {
+	        query.setParameter("modello", "%" + modello + "%");
+	    }
+	    if (targa != null && !targa.isEmpty()) {
+	        query.setParameter("targa", "%" + targa + "%");
+	    }
+
+	    if (limit != null && limit > 0) {
+	        query.setMaxResults(limit);
+	    }
+
+	    return query.getResultList();
+	}
+
 
 }

@@ -53,7 +53,8 @@ public class LoginRest {
 	        return Response.ok(response).build();
 	    }
 
-	    String token = JwtUtil.generateToken(user.getEmail());
+	    String token = JwtUtil.generateToken(user);
+
 
 	    Map<String, String> result = new HashMap<>();
 	    result.put("token", token);

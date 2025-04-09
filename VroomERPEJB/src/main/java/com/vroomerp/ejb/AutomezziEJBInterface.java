@@ -7,11 +7,13 @@ import javax.persistence.TypedQuery;
 
 import com.vroomerp.model.TAuto;
 import com.vroomerp.model.TMezzo;
+import com.vroomerp.model.TMoto;
 import com.vroomerp.model.TMotoreEuro;
 import com.vroomerp.model.TTipoAlimentazione;
 import com.vroomerp.model.TTipoAuto;
 import com.vroomerp.model.TTipoMoto;
 import com.vroomerp.model.TTipoRimorchio;
+import com.vroomerp.model.TTir;
 
 
 @Remote
@@ -42,6 +44,12 @@ public interface AutomezziEJBInterface {
 	TMezzo findMezzoByAutoId(Integer autoId);
 
 	TMezzo updateMezzo(TMezzo mezzo);
+
+	List<TAuto> findAllAutoFiltered(String marca, String modello, String targa, Integer limit);
+
+	List<TMoto> findAllMotoFiltered(String marca, String modello, String targa, Integer limit);
+
+	List<TTir> findAllTirFiltered(String marca, String modello, String targa, Integer limit);
 	
 	
 	
