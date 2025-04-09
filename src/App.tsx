@@ -14,8 +14,8 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={token ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/user/:id" element={token ? <UserDetail /> : <Navigate to="/login" />} />
-        <Route path="/auto/:id" element={token ? <AutoDetail /> : <Navigate to="/login" />} />
+        <Route path="/user/:userId" element={token ? <UserDetail /> : <Navigate to="/login" />} />
+        <Route path="/auto/:autoId" element={token ? <AutoDetail /> : <Navigate to="/login" />} />
         <Route path="*" element={<Login />} />
       </Routes>
     </Router>
