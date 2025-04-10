@@ -50,6 +50,12 @@ public interface AutomezziEJBInterface {
 	List<TMoto> findAllMotoFiltered(String marca, String modello, String targa, Integer limit);
 
 	List<TTir> findAllTirFiltered(String marca, String modello, String targa, Integer limit);
+
+	List<TTipoAlimentazione> findAllTipoAlimentazione();
+
+	List<TTipoAuto> findAllTipoAuto();
+
+	List<TMotoreEuro> findAllMotoreEuro();
 	
 	
 	

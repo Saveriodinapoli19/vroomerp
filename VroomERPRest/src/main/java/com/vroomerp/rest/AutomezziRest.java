@@ -26,6 +26,14 @@ import com.vroomerp.common.dto.auto.AutoBean;
 import com.vroomerp.common.dto.auto.AutoRequest;
 import com.vroomerp.common.dto.auto.AutoResponse;
 import com.vroomerp.common.dto.mezzo.MezzoBean;
+import com.vroomerp.common.dto.tipologiche.MotoreEuroBean;
+import com.vroomerp.common.dto.tipologiche.MotoreEuroResponse;
+import com.vroomerp.common.dto.tipologiche.TipoAlimentazioneBean;
+import com.vroomerp.common.dto.tipologiche.TipoAlimentazioneResponse;
+import com.vroomerp.common.dto.tipologiche.TipoAutoBean;
+import com.vroomerp.common.dto.tipologiche.TipoAutoResponse;
+import com.vroomerp.common.dto.user.RuoloUtenteBean;
+import com.vroomerp.common.dto.user.RuoloUtenteResponse;
 import com.vroomerp.common.dto.user.UserBean;
 import com.vroomerp.common.dto.user.UserResponse;
 import com.vroomerp.ejb.AutomezziEJBInterface;
@@ -398,4 +406,119 @@ public class AutomezziRest {
 		}
 	}
 
+	@JWTTokenNeeded
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findAllTipoAlimentazione")
+	public Response findAllTipoAlimentazione() {
+		TipoAlimentazioneResponse response = new TipoAlimentazioneResponse();
+
+		try {
+
+			List<TipoAlimentazioneBean> alimentazioneBeanList = automezziEJB.findAllTipoAlimentazione().stream().map(u -> {
+
+				TipoAlimentazioneBean bean = new TipoAlimentazioneBean();
+				try {
+					BeanUtils.copyProperties(bean, u);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return bean;
+
+			}).collect(Collectors.toList());
+
+			response.setTipoAlimentazioneBeanList(alimentazioneBeanList);
+			response.setErrorCode(0);
+			response.setErrorMessage("OK");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	@JWTTokenNeeded
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findAllMotoreEuro")
+	public Response findAllMotoreEuro() {
+		MotoreEuroResponse response = new MotoreEuroResponse();
+
+		try {
+
+			List<MotoreEuroBean> motoreEuroBeanList =automezziEJB.findAllMotoreEuro().stream().map(u -> {
+
+				MotoreEuroBean bean = new MotoreEuroBean();
+				try {
+					BeanUtils.copyProperties(bean, u);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return bean;
+
+			}).collect(Collectors.toList());
+
+			response.setMotoreEuroBeanList(motoreEuroBeanList);
+			response.setErrorCode(0);
+			response.setErrorMessage("OK");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	@JWTTokenNeeded
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findAllTipoAuto")
+	public Response findAllTipoAuto() {
+		TipoAutoResponse response = new TipoAutoResponse();
+
+		try {
+
+			List<TipoAutoBean> tipoAutoBeanList =automezziEJB.findAllTipoAuto().stream().map(u -> {
+
+				TipoAutoBean bean = new TipoAutoBean();
+				try {
+					BeanUtils.copyProperties(bean, u);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return bean;
+
+			}).collect(Collectors.toList());
+
+			response.setTipoAutoBeanList(tipoAutoBeanList);
+			response.setErrorCode(0);
+			response.setErrorMessage("OK");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	
 }

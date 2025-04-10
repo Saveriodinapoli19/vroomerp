@@ -26,6 +26,8 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.beanutils.BeanUtils;
 
 import com.vroomerp.common.dto.auth.LoginRequest;
+import com.vroomerp.common.dto.user.RuoloUtenteBean;
+import com.vroomerp.common.dto.user.RuoloUtenteResponse;
 import com.vroomerp.common.dto.user.UserBean;
 import com.vroomerp.common.dto.user.UserRequest;
 import com.vroomerp.common.dto.user.UserResponse;
@@ -69,7 +71,9 @@ public class UserRest {
 			user.setTelefono(request.getUserBean().getTelefono());
 //			String hashed = PasswordUtil.encodePassword(request.getUserBean().getPassword());
 //			user.setPassword(hashed);
-			Md5Generator.convertPass(request.getUserBean().getPassword());
+			String hashedPassword = Md5Generator.convertPass(request.getUserBean().getPassword());
+			user.setPassword(hashedPassword);
+
 			TRuoloUtente ruolo = userEJB.findByRuoloId(request.getUserBean().getExtRuoloUtenteId());
 			if (ruolo == null) {
 				response.setErrorCode(2);
@@ -160,7 +164,7 @@ public class UserRest {
 			}
 
 			if (request.getUserBean().getPassword() != null && !request.getUserBean().getPassword().isEmpty()) {
-				String hashedPassword = PasswordUtil.encodePassword(request.getUserBean().getPassword());
+				String hashedPassword = Md5Generator.convertPass(request.getUserBean().getPassword());
 				user.setPassword(hashedPassword);
 			}
 
@@ -290,6 +294,44 @@ public class UserRest {
 			}).collect(Collectors.toList());
 
 			response.setUserBeanList(userList);
+			response.setErrorCode(0);
+			response.setErrorMessage("OK");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	@JWTTokenNeeded
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findAllRuoloUtente")
+	public Response findAllRuoloUtente() {
+		RuoloUtenteResponse response = new RuoloUtenteResponse();
+
+		try {
+
+			List<RuoloUtenteBean> ruoloList = userEJB.findAllRuoli().stream().map(u -> {
+
+				RuoloUtenteBean bean = new RuoloUtenteBean();
+				try {
+					BeanUtils.copyProperties(bean, u);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return bean;
+
+			}).collect(Collectors.toList());
+
+			response.setListaRuoloUtenteBean(ruoloList);
 			response.setErrorCode(0);
 			response.setErrorMessage("OK");
 

@@ -97,4 +97,18 @@ public class UserEJB implements UserEJBInterface {
 			return null; 
 		}
 	}
+	
+	@Override 
+	public List<TRuoloUtente> findAllRuoli() {
+		String query = "SELECT t FROM TRuoloUtente t ";
+
+		TypedQuery<TRuoloUtente> str = em.createQuery(query, TRuoloUtente.class);
+		
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null; 
+		}
+	}
 }

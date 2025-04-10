@@ -24,4 +24,6 @@ public interface UserEJBInterface {
 
 	List<TUser> findAll();
 
+	List<TRuoloUtente> findAllRuoli();
+
 }

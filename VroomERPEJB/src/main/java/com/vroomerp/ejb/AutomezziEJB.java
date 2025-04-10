@@ -264,5 +264,42 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	    return query.getResultList();
 	}
 
+	@Override
+	public List<TTipoAlimentazione> findAllTipoAlimentazione() {
+		String query = "SELECT t FROM TTipoAlimentazione t ";
 
+		TypedQuery<TTipoAlimentazione> str = em.createQuery(query, TTipoAlimentazione.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<TTipoAuto> findAllTipoAuto() {
+		String query = "SELECT t FROM TTipoAuto t ";
+
+		TypedQuery<TTipoAuto> str = em.createQuery(query, TTipoAuto.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<TMotoreEuro> findAllMotoreEuro() {
+		String query = "SELECT t FROM TMotoreEuro t ";
+
+		TypedQuery<TMotoreEuro> str = em.createQuery(query, TMotoreEuro.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }

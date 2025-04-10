@@ -15,9 +15,9 @@ public class JwtUtil {
 				.claim("email", user.getEmail())
 				.claim("nome", user.getNome())
 				.claim("cognome", user.getCognome())
-				// .claim("ruolo", user.getRuolo().getNome()) // opzionale se gestisci ruoli
+				.claim("ruolo", user.getExtRuoloUtenteId()) // opzionale se gestisci ruoli
 				.setIssuedAt(new Date())
-				.setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 ora
+				.setExpiration(new Date(System.currentTimeMillis() + 365L * 24 * 60 * 60 * 1000)) // 1 anno
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY)
 				.compact();
 	}
