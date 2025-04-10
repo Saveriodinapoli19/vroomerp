@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axiosInstance';
+import BackToDashboard from '../pages/BackToDashboard';
 import { toast } from 'react-toastify';
 
 const UserEdit: React.FC = () => {
@@ -50,6 +51,7 @@ const UserEdit: React.FC = () => {
 
   return (
     <div className="form-container">
+       <BackToDashboard />
       <h2>Modifica Utente</h2>
       <form onSubmit={handleSubmit} className="form">
         <input placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required />

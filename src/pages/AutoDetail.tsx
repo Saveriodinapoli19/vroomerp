@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axiosInstance';
 import '../App.css';
-
+import BackToDashboard from '../pages/BackToDashboard';
 interface MezzoBean {
   mezzoId: number;
   modello: string;
@@ -57,6 +57,7 @@ const AutoDetail: React.FC = () => {
 
   return (
     <div className="detail-container">
+      <BackToDashboard />
       <h2>Dettaglio Automezzo</h2>
       <p><strong>Modello:</strong> {auto.mezzoBean?.modello}</p>
       <p><strong>Targa:</strong> {auto.mezzoBean?.targa}</p>

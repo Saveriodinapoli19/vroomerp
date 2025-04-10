@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axiosInstance';
 import '../App.css';
 import { toast } from 'react-toastify';
+import BackToDashboard from '../pages/BackToDashboard';
 interface MezzoBean {
   mezzoId: number;
   modello: string;
@@ -91,6 +92,7 @@ const AutoEdit: React.FC = () => {
 
   return (
     <div className="form-container">
+      <BackToDashboard />
       <h2>Modifica Automezzo</h2>
       <form onSubmit={handleSubmit} className="form">
         <input value={auto.mezzoBean?.modello} onChange={e => handleMezzoChange('modello', e.target.value)} placeholder="Modello" required />

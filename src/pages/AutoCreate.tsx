@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../App.css';
-
+import BackToDashboard from '../pages/BackToDashboard';
 const AutoCreate: React.FC = () => {
   const navigate = useNavigate();
 
@@ -89,6 +89,7 @@ const AutoCreate: React.FC = () => {
 
   return (
     <div className="form-container">
+      <BackToDashboard />
       <ToastContainer />
       <h2>Inserisci Nuovo Automezzo</h2>
       <form onSubmit={handleSubmit} className="form">

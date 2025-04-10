@@ -250,7 +250,7 @@ body {
   }
   
   button {
-    background-color: #2ecc71;
+    background-color: #19d2d2;
     color: white;
     border: none;
     padding: 0.7rem;
@@ -260,7 +260,7 @@ body {
   }
   
   button:hover {
-    background-color: #27ae60;
+    background-color: #19d2d2;
   }
   
   .error-text {
@@ -550,6 +550,14 @@ body {
     cursor: pointer;
   }
   
+  .logout-btn:hover {
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   /* Main layout: sidebar + content */
   .main-layout {
     display: flex;

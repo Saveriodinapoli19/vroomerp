@@ -3,7 +3,7 @@ import axios from '../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import { toast } from 'react-toastify';
-
+import BackToDashboard from '../pages/BackToDashboard';
 interface Ruolo {
   ruoloUtenteId: number;
   descrizione: string;
@@ -64,6 +64,7 @@ const UserCreate: React.FC = () => {
 
   return (
     <div className="form-container">
+      <BackToDashboard />
       <h2>Crea Nuovo Utente</h2>
       <form onSubmit={handleSubmit} className="form" autoComplete="off">
         <input placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required autoComplete="off" />

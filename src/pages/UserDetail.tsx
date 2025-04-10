@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axiosInstance';
 import '../App.css';
-
+import BackToDashboard from '../pages/BackToDashboard';
 interface User {
     userId: number;
   nome: string;
@@ -45,6 +45,7 @@ const UserDetail: React.FC = () => {
 
   return (
     <div className="detail-container">
+        <BackToDashboard /> {/* <<-- Aggiungi questo qui */}
       <h2>Dettaglio Utente</h2>
       <p><strong>Nome:</strong> {user.nome}</p>
       <p><strong>Cognome:</strong> {user.cognome}</p>
