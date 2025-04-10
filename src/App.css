@@ -131,4 +131,595 @@ body {
   .detail-container p {
     margin: 0.3rem 0;
   }
+  .dashboard-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-username {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .logout {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .logout:hover {
+    background-color: #c0392b;
+  }
+  
+  .toggle-section {
+    margin-bottom: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.1rem;
+    cursor: pointer;
+    background-color: #f4f4f4;
+    padding: 0.7rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .section-title:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .section-content {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    background-color: #fafafa;
+  }
+  
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .item-row:last-child {
+    border-bottom: none;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .btn-small {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-small:hover {
+    background-color: #2980b9;
+  }
+  
+  .btn-delete {
+    background-color: #e74c3c;
+  }
+  
+  .btn-delete:hover {
+    background-color: #c0392b;
+  }
+
+  .form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    background: #fdfdfd;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  input, select {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  button:hover {
+    background-color: #27ae60;
+  }
+  
+  .error-text {
+    color: red;
+    font-weight: 500;
+  }
+
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .view-btn,
+  .edit-btn,
+  .delete-btn {
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .view-btn {
+    background-color: #d0ebff;
+  }
+  
+  .edit-btn {
+    background-color: #ffe066;
+  }
+  
+  .delete-btn {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  .button-group button {
+    background: transparent;
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+  
+  .button-group button:hover {
+    transform: scale(1.1);
+  }
+  
+  .view-btn { color: #3498db; }
+  .edit-btn { color: #f39c12; }
+  .delete-btn { color: #e74c3c; }
+  .create-btn {
+    margin: 10px 0;
+    padding: 8px 12px;
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .user-section {
+    margin-top: 2rem;
+  }
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .user-table th,
+  .user-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .user-name {
+    font-weight: 500;
+  }
+  
+  .user-actions button {
+    margin-right: 0.5rem;
+  }
+  
+  .dashboard-container {
+    position: relative;
+    height: 100vh;
+    padding: 2rem;
+  }
+  
+  /* Nome utente in alto a destra */
+  .top-right {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .username-label {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  /* Voci menu in basso a destra */
+  .menu-laterale {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: right;
+  }
+  
+  .menu-laterale h3 {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Lista centrata nella pagina */
+  .contenuto-centrale {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .user-section, .auto-section {
+    width: 70%;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-table th, .user-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .create-btn, .view-btn, .edit-btn, .delete-btn {
+    margin-right: 0.5rem;
+  }
+  .dashboard-container {
+    display: flex;
+    height: 100vh;
+    background: #f5f7fa;
+  }
+  
+  /* Sidebar a sinistra */
+  .sidebar {
+    width: 240px;
+    background: #ffffff;
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .username-label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #007bff;
+  }
+  
+  .logout {
+    padding: 0.4rem 1rem;
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .menu-laterale {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .menu-laterale h3 {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Contenuto centrale */
+  .contenuto-centrale {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+  
+  .user-section, .auto-section {
+    width: 80%;
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-table th, .user-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .create-btn, .view-btn, .edit-btn, .delete-btn {
+    margin-right: 0.5rem;
+  }
+
+  .dashboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* Top bar */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .user-info {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #007bff;
+  }
+  
+  .logout-btn {
+    padding: 0.5rem 1rem;
+    background-color: #dc3545;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Main layout: sidebar + content */
+  .main-layout {
+    display: flex;
+    flex: 1;
+    height: 100%;
+  }
+  
+  /* Sidebar */
+  .sidebar-left {
+    width: 200px;
+    background: #ffffff;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+  }
+  
+  .menu-item {
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Content */
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  /* Section styling */
+  .user-section, .auto-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .create-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-table th, .user-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .view-btn, .edit-btn, .delete-btn {
+    margin-right: 0.5rem;
+  }
+
+  .floating-user-box {
+    position: absolute;
+    top: 100px;
+    left: 25%;
+    width: 50%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 999;
+    border-radius: 8px;
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  
+  .box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .floating-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .floating-table th, .floating-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .floating-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .floating-user-box.expanded {
+    background-color: #fff;
+    width: 80%;             /* Aumentato rispetto a 80% */
+  max-width: 1000px;       /* Più spazio orizzontale */
+  max-height: 100vh;        /* Più spazio verticale */
+    overflow-y: auto;
+    border-radius: 12px;
+    padding: 80px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: slideDown 0.0s ease;
+    transform: translate(-13%, 0); /* Spostamento a sinistra */
+  }
+  
+  
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .floating-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .floating-table th,
+  .floating-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #444;
+    transition: color 0.2s;
+  }
+  
+  .close-btn:hover {
+    color: red;
+  }
   

@@ -1,0 +1,91 @@
+.dashboard-enhancements {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Box riepilogo */
+  .stats-boxes {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .stat-box {
+    flex: 1;
+    min-width: 200px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  .stat-box h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .stat-box p {
+    color: #666;
+    margin-top: 0.4rem;
+  }
+  
+  /* Ultimi inserimenti */
+  .latest-inserts {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .latest-users, .latest-auto {
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .latest-users h4,
+  .latest-auto h4 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .latest-users ul,
+  .latest-auto ul {
+    list-style: none;
+    padding-left: 1rem;
+  }
+  
+  .latest-users li,
+  .latest-auto li {
+    padding: 4px 0;
+    font-size: 0.95rem;
+  }
+  
+  /* Azioni rapide */
+  .quick-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .quick-actions button {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .quick-actions button:hover {
+    background-color: #125aa5;
+  }
+  
