@@ -39,6 +39,9 @@ public class TTir implements Serializable {
 	@Column(name="portata_max")
 	private Double portataMax;
 
+	@Column(name="flag_deleted")
+	private Integer flagDeleted;
+	
 	public TTir() {
 	}
 
@@ -104,6 +107,14 @@ public class TTir implements Serializable {
 
 	public void setPortataMax(Double portataMax) {
 		this.portataMax = portataMax;
+	}
+
+	public Integer getFlagDeleted() {
+		return flagDeleted;
+	}
+
+	public void setFlagDeleted(Integer flagDeleted) {
+		this.flagDeleted = flagDeleted;
 	}
 
 	

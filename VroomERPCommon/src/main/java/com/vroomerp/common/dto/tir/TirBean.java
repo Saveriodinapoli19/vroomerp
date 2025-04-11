@@ -1,6 +1,5 @@
 package com.vroomerp.common.dto.tir;
 
-
 public class TirBean {
 
 
@@ -21,6 +20,8 @@ public class TirBean {
 	private Double portataMax;
 
 	private String cilindrata;
+	
+	private Integer flagDeleted;
 	
 	public Integer getTirId() {
 		return tirId;
@@ -92,6 +93,14 @@ public class TirBean {
 
 	public void setCilindrata(String cilindrata) {
 		this.cilindrata = cilindrata;
+	}
+
+	public Integer getFlagDeleted() {
+		return flagDeleted;
+	}
+
+	public void setFlagDeleted(Integer flagDeleted) {
+		this.flagDeleted = flagDeleted;
 	}
 	
 	

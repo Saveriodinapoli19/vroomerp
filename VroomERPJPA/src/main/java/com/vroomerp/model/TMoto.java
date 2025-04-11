@@ -28,8 +28,8 @@ public class TMoto implements Serializable {
 	@Column(name="ext_tipo_motore_id")
 	private Integer extTipoMotoreId;
 
-	@Column(name="flag_deletd")
-	private Integer flagDeletd;
+	@Column(name="flag_deleted")
+	private Integer flagDeleted;
 
 	private String peso;
 
@@ -38,12 +38,13 @@ public class TMoto implements Serializable {
 
 	private String raffreddamento;
 
-	@Column(name="tipo_moto_id")
-	private Integer tipoMotoId;
 	
 	@Column(name="cilindrata")
 	private String cilindrata;
 
+	@Column(name="ext_tipo_alimentazione")
+	private Integer extTipoAlimentazione;
+	
 	public TMoto() {
 	}
 
@@ -80,12 +81,12 @@ public class TMoto implements Serializable {
 		this.extTipoMotoreId = extTipoMotoreId;
 	}
 
-	public Integer getFlagDeletd() {
-		return flagDeletd;
+	public Integer getFlagDeleted() {
+		return flagDeleted;
 	}
 
-	public void setFlagDeletd(Integer flagDeletd) {
-		this.flagDeletd = flagDeletd;
+	public void setFlagDeleted(Integer flagDeleted) {
+		this.flagDeleted = flagDeleted;
 	}
 
 	public String getPeso() {
@@ -112,20 +113,20 @@ public class TMoto implements Serializable {
 		this.raffreddamento = raffreddamento;
 	}
 
-	public Integer getTipoMotoId() {
-		return tipoMotoId;
-	}
-
-	public void setTipoMotoId(Integer tipoMotoId) {
-		this.tipoMotoId = tipoMotoId;
-	}
-
 	public String getCilindrata() {
 		return cilindrata;
 	}
 
 	public void setCilindrata(String cilindrata) {
 		this.cilindrata = cilindrata;
+	}
+
+	public Integer getExtTipoAlimentazione() {
+		return extTipoAlimentazione;
+	}
+
+	public void setExtTipoAlimentazione(Integer extTipoAlimentazione) {
+		this.extTipoAlimentazione = extTipoAlimentazione;
 	}
 
 	

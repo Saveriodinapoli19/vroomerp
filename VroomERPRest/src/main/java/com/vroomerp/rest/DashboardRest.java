@@ -55,7 +55,7 @@ public class DashboardRest {
 	    @QueryParam("limit") Integer limit
 	) {
 	    try {
-	        List<TAuto> autos = automezziEJB.findAllAutoFiltered(marca, modello, targa, 4);
+	        List<TAuto> autos = automezziEJB.findAllAutoFiltered(marca, modello, targa, limit);
 	        List<AutoBean> results = autos.stream().map(auto -> {
 	            AutoBean bean = new AutoBean();
 	            try {

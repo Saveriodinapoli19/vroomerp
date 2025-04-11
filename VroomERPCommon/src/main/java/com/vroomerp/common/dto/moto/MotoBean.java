@@ -1,5 +1,6 @@
 package com.vroomerp.common.dto.moto;
 
+import com.vroomerp.common.dto.mezzo.MezzoBean;
 
 public class MotoBean {
 
@@ -14,13 +15,25 @@ public class MotoBean {
 
 	private Integer extTipoMotoreId;
 
-	private Integer flagDeletd;
+	private Integer flagDeleted;
 
 	private String peso;
 
 	private String potenzaKw;
 
 	private String raffreddamento;
+	
+	private Integer extTipoAlimentazione;
+	
+	private String alimentazione;
+	private String motoreEuro;
+	private String tipoMoto;
+	private String tipoMotore;
+	
+	private MezzoBean mezzoBean;
+	
+	
+	
 
 	public Integer getMotoId() {
 		return motoId;
@@ -55,12 +68,12 @@ public class MotoBean {
 		this.extTipoMotoreId = extTipoMotoreId;
 	}
 
-	public Integer getFlagDeletd() {
-		return flagDeletd;
+	public Integer getFlagDeleted() {
+		return flagDeleted;
 	}
 
-	public void setFlagDeletd(Integer flagDeletd) {
-		this.flagDeletd = flagDeletd;
+	public void setFlagDeleted(Integer flagDeleted) {
+		this.flagDeleted = flagDeleted;
 	}
 
 	public String getPeso() {
@@ -93,6 +106,54 @@ public class MotoBean {
 
 	public void setCilindrata(String cilindrata) {
 		this.cilindrata = cilindrata;
+	}
+
+	public Integer getExtTipoAlimentazione() {
+		return extTipoAlimentazione;
+	}
+
+	public void setExtTipoAlimentazione(Integer extTipoAlimentazione) {
+		this.extTipoAlimentazione = extTipoAlimentazione;
+	}
+
+	public MezzoBean getMezzoBean() {
+		return mezzoBean;
+	}
+
+	public void setMezzoBean(MezzoBean mezzoBean) {
+		this.mezzoBean = mezzoBean;
+	}
+
+	public String getAlimentazione() {
+		return alimentazione;
+	}
+
+	public void setAlimentazione(String alimentazione) {
+		this.alimentazione = alimentazione;
+	}
+
+	public String getMotoreEuro() {
+		return motoreEuro;
+	}
+
+	public void setMotoreEuro(String motoreEuro) {
+		this.motoreEuro = motoreEuro;
+	}
+
+	public String getTipoMoto() {
+		return tipoMoto;
+	}
+
+	public void setTipoMoto(String tipoMoto) {
+		this.tipoMoto = tipoMoto;
+	}
+
+	public String getTipoMotore() {
+		return tipoMotore;
+	}
+
+	public void setTipoMotore(String tipoMotore) {
+		this.tipoMotore = tipoMotore;
 	}
 	
 	

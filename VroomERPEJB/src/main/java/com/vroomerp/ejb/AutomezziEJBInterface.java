@@ -12,6 +12,7 @@ import com.vroomerp.model.TMotoreEuro;
 import com.vroomerp.model.TTipoAlimentazione;
 import com.vroomerp.model.TTipoAuto;
 import com.vroomerp.model.TTipoMoto;
+import com.vroomerp.model.TTipoMotore;
 import com.vroomerp.model.TTipoRimorchio;
 import com.vroomerp.model.TTir;
 
@@ -56,6 +57,20 @@ public interface AutomezziEJBInterface {
 	List<TTipoAuto> findAllTipoAuto();
 
 	List<TMotoreEuro> findAllMotoreEuro();
+
+	TMoto insertMoto(TMoto moto);
+
+	TTipoMotore findByTipoMotoreId(Integer tipoMotoreId);
+
+	TMoto findByMotoId(Integer motoId);
+
+	TMezzo findMezzoByMotoId(Integer motoId);
+
+	TMoto updateMoto(TMoto moto);
+
+	List<TMoto> findAllMoto();
+
+	TMoto deleteMoto(TMoto moto);
 	
 	
 	

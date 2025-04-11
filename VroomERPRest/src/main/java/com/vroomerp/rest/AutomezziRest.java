@@ -26,6 +26,9 @@ import com.vroomerp.common.dto.auto.AutoBean;
 import com.vroomerp.common.dto.auto.AutoRequest;
 import com.vroomerp.common.dto.auto.AutoResponse;
 import com.vroomerp.common.dto.mezzo.MezzoBean;
+import com.vroomerp.common.dto.moto.MotoBean;
+import com.vroomerp.common.dto.moto.MotoRequest;
+import com.vroomerp.common.dto.moto.MotoResponse;
 import com.vroomerp.common.dto.tipologiche.MotoreEuroBean;
 import com.vroomerp.common.dto.tipologiche.MotoreEuroResponse;
 import com.vroomerp.common.dto.tipologiche.TipoAlimentazioneBean;
@@ -40,12 +43,17 @@ import com.vroomerp.ejb.AutomezziEJBInterface;
 import com.vroomerp.ejb.UserEJBInterface;
 import com.vroomerp.model.TAuto;
 import com.vroomerp.model.TMezzo;
+import com.vroomerp.model.TMoto;
 import com.vroomerp.model.TMotoreEuro;
 import com.vroomerp.model.TRuoloUtente;
 import com.vroomerp.model.TTipoAlimentazione;
 import com.vroomerp.model.TTipoAuto;
+import com.vroomerp.model.TTipoMoto;
+import com.vroomerp.model.TTipoMotore;
 import com.vroomerp.security.Admin;
 import com.vroomerp.security.JWTTokenNeeded;
+
+import io.jsonwebtoken.lang.Strings;
 
 @Stateless
 @Path("/automezzi")
@@ -520,5 +528,378 @@ public class AutomezziRest {
 		}
 	}
 	
+	@Path("/insertMoto")
+	@JWTTokenNeeded
+	@Admin
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@POST
+	public Response insertMoto(MotoRequest request) {
+		MotoResponse response = new MotoResponse();
+		try {
+
+			TMoto moto = new TMoto();
+
+
+			String peso = request.getMotoBean().getPeso();
+			if (!peso.toLowerCase().contains("kg")) {
+			    peso += " kg";
+			}
+			moto.setPeso(peso);
+			moto.setPotenzaKw(request.getMotoBean().getPotenzaKw());
+			moto.setCilindrata(request.getMotoBean().getCilindrata());
+			moto.setRaffreddamento(request.getMotoBean().getRaffreddamento());
+
+			TTipoAlimentazione tipoAlimentazione = automezziEJB
+					.findByTipoAlimentazioneId(request.getMotoBean().getExtTipoAlimentazione());
+			if (tipoAlimentazione == null) {
+				response.setErrorCode(01);
+				response.setErrorMessage("Tipo alimentazione inseistente");
+				return Response.ok(response).build();
+			}
+
+			moto.setExtTipoAlimentazione(tipoAlimentazione.getIdTipoAlimentazione());
+			
+			TTipoMotore tipoMotore = automezziEJB
+					.findByTipoMotoreId(request.getMotoBean().getExtTipoMotoreId());
+			if (tipoMotore == null) {
+				response.setErrorCode(01);
+				response.setErrorMessage("Tipo alimentazione inseistente");
+				return Response.ok(response).build();
+			}
+			
+			moto.setExtTipoMotoreId(tipoMotore.getTipoMotoreId());
+			
+			TMotoreEuro motoreEuro = automezziEJB.findByMotoreEuroId(request.getMotoBean().getExtMotoreEuroId());
+			if (motoreEuro == null) {
+				response.setErrorCode(02);
+				response.setErrorMessage("Motore euro inseistente");
+				return Response.ok(response).build();
+			}
+
+			moto.setExtMotoreEuroId(motoreEuro.getMotoreEuroId());
+
+			TTipoMoto tipoMoto = automezziEJB.findByTipoMotoId(request.getMotoBean().getExtTipoMotoId());
+			if (tipoMoto == null) {
+				response.setErrorCode(03);
+				response.setErrorMessage("Tipologia di moto inseistente");
+				return Response.ok(response).build();
+			}
+			moto.setExtTipoMotoId(tipoMoto.getTipoMotoId());
+
+			moto = automezziEJB.insertMoto(moto);
+
+			TMezzo mezzo = new TMezzo();
+			mezzo.setMotoId(moto.getMotoId());
+			mezzo.setAnnoImmatricolazione(request.getMezzoBean().getAnnoImmatricolazione());
+			mezzo.setColore(request.getMezzoBean().getColore());
+			if (request.getMezzoBean().getDataAcquisto() != null) {
+				mezzo.setDataAcquisto(request.getMezzoBean().getDataAcquisto());
+			}
+			mezzo.setFlagDeleted(0);
+			mezzo.setDataInserimento(new Date());
+			mezzo.setExtTipoAlimentazione(moto.getExtTipoAlimentazione());
+			mezzo.setMarca(request.getMezzoBean().getMarca());
+			mezzo.setModello(request.getMezzoBean().getModello());
+			mezzo.setTarga(request.getMezzoBean().getTarga());
+			mezzo.setPrezzo(request.getMezzoBean().getPrezzo());
+
+			mezzo = automezziEJB.insertMezzo(mezzo);
+
+			MezzoBean mezzoBean = new MezzoBean();
+			BeanUtils.copyProperties(mezzoBean, mezzo);
+			MotoBean motoBean = new MotoBean();
+			BeanUtils.copyProperties(motoBean, moto);
+
+			motoBean.setMezzoBean(mezzoBean);
+
+			response.setMotoBean(motoBean);
+			response.setErrorCode(0);
+			response.setErrorMessage("Moto creata con successo");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+
+	}
 	
+	@Path("/updateMoto")
+	@JWTTokenNeeded
+	@Admin
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@POST
+	public Response updateMoto(MotoRequest request) {
+		MotoResponse response = new MotoResponse();
+		try {
+
+			TMoto moto = automezziEJB.findByMotoId(request.getMotoBean().getMotoId());
+
+
+			String peso = request.getMotoBean().getPeso();
+			if (!peso.toLowerCase().contains("kg")) {
+			    peso += " kg";
+			}
+			moto.setPeso(peso);
+			moto.setPotenzaKw(request.getMotoBean().getPotenzaKw());
+			moto.setCilindrata(request.getMotoBean().getCilindrata());
+			moto.setRaffreddamento(request.getMotoBean().getRaffreddamento());
+
+			TTipoAlimentazione tipoAlimentazione = automezziEJB
+					.findByTipoAlimentazioneId(request.getMotoBean().getExtTipoAlimentazione());
+			if (tipoAlimentazione == null) {
+				response.setErrorCode(01);
+				response.setErrorMessage("Tipo alimentazione inseistente");
+				return Response.ok(response).build();
+			}
+
+			moto.setExtTipoAlimentazione(tipoAlimentazione.getIdTipoAlimentazione());
+			
+			TTipoMotore tipoMotore = automezziEJB
+					.findByTipoMotoreId(request.getMotoBean().getExtTipoMotoreId());
+			if (tipoMotore == null) {
+				response.setErrorCode(01);
+				response.setErrorMessage("Tipo alimentazione inseistente");
+				return Response.ok(response).build();
+			}
+			
+			moto.setExtTipoMotoreId(tipoMotore.getTipoMotoreId());
+			
+			TMotoreEuro motoreEuro = automezziEJB.findByMotoreEuroId(request.getMotoBean().getExtMotoreEuroId());
+			if (motoreEuro == null) {
+				response.setErrorCode(02);
+				response.setErrorMessage("Motore euro inseistente");
+				return Response.ok(response).build();
+			}
+
+			moto.setExtMotoreEuroId(motoreEuro.getMotoreEuroId());
+
+			TTipoMoto tipoMoto = automezziEJB.findByTipoMotoId(request.getMotoBean().getExtTipoMotoId());
+			if (tipoMoto == null) {
+				response.setErrorCode(03);
+				response.setErrorMessage("Tipologia di moto inseistente");
+				return Response.ok(response).build();
+			}
+			moto.setExtTipoMotoId(tipoMoto.getTipoMotoId());
+
+			moto = automezziEJB.updateMoto(moto);
+
+			TMezzo mezzo = automezziEJB.findMezzoByMotoId(moto.getMotoId());
+			mezzo.setMotoId(moto.getMotoId());
+			mezzo.setAnnoImmatricolazione(request.getMezzoBean().getAnnoImmatricolazione());
+			mezzo.setColore(request.getMezzoBean().getColore());
+			if (request.getMezzoBean().getDataAcquisto() != null) {
+				mezzo.setDataAcquisto(request.getMezzoBean().getDataAcquisto());
+			}
+			mezzo.setFlagDeleted(0);
+			//mezzo.setDataInserimento(new Date());
+			mezzo.setExtTipoAlimentazione(moto.getExtTipoAlimentazione());
+			mezzo.setMarca(request.getMezzoBean().getMarca());
+			mezzo.setModello(request.getMezzoBean().getModello());
+			mezzo.setTarga(request.getMezzoBean().getTarga());
+			mezzo.setPrezzo(request.getMezzoBean().getPrezzo());
+
+			mezzo = automezziEJB.updateMezzo(mezzo);
+
+			MezzoBean mezzoBean = new MezzoBean();
+			BeanUtils.copyProperties(mezzoBean, mezzo);
+			MotoBean motoBean = new MotoBean();
+			BeanUtils.copyProperties(motoBean, moto);
+
+			motoBean.setMezzoBean(mezzoBean);
+
+			response.setMotoBean(motoBean);
+			response.setErrorCode(0);
+			response.setErrorMessage("Moto Aggiornata con successo");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	@Admin
+	@JWTTokenNeeded
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/deleteMoto/{motoId}")
+	public Response deleteMoto(@PathParam("motoId") Integer motoId) {
+		AutoResponse response = new AutoResponse();
+
+		try {
+
+			TMoto moto = automezziEJB.findByMotoId(motoId);
+			if (moto == null) {
+				response.setErrorCode(99);
+				response.setErrorMessage("Moto non trovata");
+				return Response.ok(response).build();
+			}
+			AutoBean bean = new AutoBean();
+			BeanUtils.copyProperties(bean, moto);
+
+			TMezzo mezzo = automezziEJB.findMezzoByMotoId(moto.getMotoId());
+			if (mezzo != null) {
+				MezzoBean mezzoBean = new MezzoBean();
+				BeanUtils.copyProperties(mezzoBean, mezzo);
+				bean.setMezzoBean(mezzoBean);
+			}
+
+			automezziEJB.deleteMoto(moto);
+
+			response.setAutoBean(bean);
+			response.setErrorCode(0);
+			response.setErrorMessage("Moto cancellata correttamente");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	@JWTTokenNeeded
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findMotoById/{motoId}")
+	public Response findMotoById(@PathParam("motoId") Integer motoId) {
+		MotoResponse response = new MotoResponse();
+
+		try {
+
+			TMoto moto = automezziEJB.findByMotoId(motoId);
+			if (moto == null) {
+				response.setErrorCode(99);
+				response.setErrorMessage("Moto non trovata");
+				return Response.ok(response).build();
+			}
+			MotoBean bean = new MotoBean();
+			BeanUtils.copyProperties(bean, moto);
+			
+			TTipoAlimentazione tipoAlimentazione = automezziEJB
+					.findByTipoAlimentazioneId(moto.getExtTipoAlimentazione());
+			if (tipoAlimentazione != null) {
+				bean.setAlimentazione(tipoAlimentazione.getDescrizione());
+			}
+
+			TMotoreEuro motoreEuro = automezziEJB.findByMotoreEuroId(moto.getExtMotoreEuroId());
+			if (motoreEuro != null) {
+				bean.setMotoreEuro(motoreEuro.getDescrizione());
+			}
+
+			TTipoMoto tipoMoto = automezziEJB.findByTipoMotoId(moto.getExtTipoMotoId());
+			if (tipoMoto != null) {
+				bean.setTipoMoto(tipoMoto.getDescrizione());
+			}
+			
+			TTipoMotore tipoMotore = automezziEJB.findByTipoMotoreId(moto.getExtTipoMotoreId());
+			if (tipoMotore != null) {
+				bean.setTipoMotore(tipoMotore.getDescrizione());
+			}
+			
+			TMezzo mezzo = automezziEJB.findMezzoByMotoId(moto.getMotoId());
+			if (mezzo != null) {
+
+				MezzoBean mezzoBean = new MezzoBean();
+
+				BeanUtils.copyProperties(mezzoBean, mezzo);
+				bean.setMezzoBean(mezzoBean);
+			}
+			response.setMotoBean(bean);
+			response.setErrorCode(0);
+			response.setErrorMessage("OK");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
+	
+	@JWTTokenNeeded
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findAllMoto")
+	public Response findAllMoto() {
+		MotoResponse response = new MotoResponse();
+
+		try {
+
+			List<MotoBean> motoList = automezziEJB.findAllMoto().stream().map(u -> {
+	
+			MotoBean bean = new MotoBean();
+			try {
+				BeanUtils.copyProperties(bean, u);
+			} catch (IllegalAccessException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			TTipoAlimentazione tipoAlimentazione = automezziEJB
+					.findByTipoAlimentazioneId(u.getExtTipoAlimentazione());
+			if (tipoAlimentazione != null) {
+				bean.setAlimentazione(tipoAlimentazione.getDescrizione());
+			}
+
+			TMotoreEuro motoreEuro = automezziEJB.findByMotoreEuroId(u.getExtMotoreEuroId());
+			if (motoreEuro != null) {
+				bean.setMotoreEuro(motoreEuro.getDescrizione());
+			}
+
+			TTipoMoto tipoMoto = automezziEJB.findByTipoMotoId(u.getExtTipoMotoId());
+			if (tipoMoto != null) {
+				bean.setTipoMoto(tipoMoto.getDescrizione());
+			}
+			
+			TTipoMotore tipoMotore = automezziEJB.findByTipoMotoreId(u.getExtTipoMotoreId());
+			if (tipoMotore != null) {
+				bean.setTipoMotore(tipoMotore.getDescrizione());
+			}
+			
+			TMezzo mezzo = automezziEJB.findMezzoByMotoId(u.getMotoId());
+			if (mezzo != null) {
+
+				MezzoBean mezzoBean = new MezzoBean();
+
+				try {
+					BeanUtils.copyProperties(mezzoBean, mezzo);
+				} catch (IllegalAccessException | InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				bean.setMezzoBean(mezzoBean);
+			}
+			return bean;
+		
+			}).collect(Collectors.toList());
+			response.setListaMoto(motoList);
+			response.setErrorCode(0);
+			response.setErrorMessage("OK");
+
+			return Response.ok(response).build();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setErrorCode(99);
+			response.setErrorMessage("Errore interno del server");
+			return Response.ok(response).build();
+		}
+	}
 }

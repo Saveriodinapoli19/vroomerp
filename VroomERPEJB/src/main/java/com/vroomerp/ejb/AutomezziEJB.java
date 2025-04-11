@@ -15,6 +15,7 @@ import com.vroomerp.model.TMotoreEuro;
 import com.vroomerp.model.TTipoAlimentazione;
 import com.vroomerp.model.TTipoAuto;
 import com.vroomerp.model.TTipoMoto;
+import com.vroomerp.model.TTipoMotore;
 import com.vroomerp.model.TTipoRimorchio;
 import com.vroomerp.model.TTir;
 import com.vroomerp.model.TUser;
@@ -83,6 +84,19 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	}
 
 	@Override
+	public TMoto deleteMoto(TMoto moto) {
+		moto.setFlagDeleted(1);
+		em.merge(moto);
+		TMezzo mezzo = findMezzoByMotoId(moto.getMotoId());
+		if (mezzo != null) {
+			mezzo.setFlagDeleted(1);
+			em.merge(mezzo);
+		}
+
+		return moto;
+	}
+	
+	@Override
 	public TTipoAlimentazione findByTipoAlimentazioneId(Integer idTipoAlimentazione) {
 		String query = "SELECT t FROM TTipoAlimentazione t WHERE t.idTipoAlimentazione = :idTipoAlimentazione  ";
 
@@ -90,6 +104,17 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 		str.setParameter("idTipoAlimentazione", idTipoAlimentazione);
 
 		List<TTipoAlimentazione> results = str.getResultList();
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	@Override
+	public TTipoMotore findByTipoMotoreId(Integer tipoMotoreId) {
+		String query = "SELECT t FROM TTipoMotore t WHERE t.tipoMotoreId = :tipoMotoreId  ";
+
+		TypedQuery<TTipoMotore> str = em.createQuery(query, TTipoMotore.class);
+		str.setParameter("tipoMotoreId", tipoMotoreId);
+
+		List<TTipoMotore> results = str.getResultList();
 		return results.isEmpty() ? null : results.get(0);
 	}
 
@@ -169,7 +194,8 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	}
 	@Override
 	public List<TAuto> findAllAutoFiltered(String marca, String modello, String targa, Integer limit) {
-	    StringBuilder queryStr = new StringBuilder("SELECT a FROM TAuto a JOIN TMezzo m ON a.autoId = m.autoId WHERE a.flagDeleted = 0");
+	    StringBuilder queryStr = new StringBuilder("SELECT a FROM TAuto a JOIN TMezzo m ON a.autoId = m.autoId "
+	    		+ "WHERE a.flagDeleted = 0 OR a.flagDeleted IS NULL AND(m.flagDeleted = 0 OR m.flagDeleted IS NULL)");
 
 	    if (marca != null && !marca.isEmpty()) {
 	        queryStr.append(" AND LOWER(m.marca) LIKE LOWER(:marca)");
@@ -193,7 +219,7 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	        query.setParameter("targa", "%" + targa + "%");
 	    }
 
-	    if (limit != null && limit > 0) {
+	    if (limit != null) {
 	        query.setMaxResults(limit);
 	    }
 
@@ -201,7 +227,8 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	}
 	@Override
 	public List<TMoto> findAllMotoFiltered(String marca, String modello, String targa, Integer limit) {
-	    StringBuilder queryStr = new StringBuilder("SELECT m FROM TMoto m JOIN TMezzo z ON m.motoId = z.motoId WHERE m.flagDeleted = 0");
+	    StringBuilder queryStr = new StringBuilder("SELECT m FROM TMoto m JOIN TMezzo z ON m.motoId = z.motoId "
+	    		+ "WHERE m.flagDeleted = 0 OR m.flagDeleted IS null AND (z.flagDeleted = 0 OR z.flagDeleted IS null)");
 
 	    if (marca != null && !marca.isEmpty()) {
 	        queryStr.append(" AND LOWER(z.marca) LIKE LOWER(:marca)");
@@ -233,7 +260,8 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	}
 	@Override
 	public List<TTir> findAllTirFiltered(String marca, String modello, String targa, Integer limit) {
-	    StringBuilder queryStr = new StringBuilder("SELECT t FROM TTir t JOIN TMezzo z ON t.tirId = z.tirId WHERE t.flagDeleted = 0");
+	    StringBuilder queryStr = new StringBuilder("SELECT t FROM TTir t JOIN TMezzo z ON t.tirId = z.tirId "
+	    		+ "WHERE t.flagDeleted = 0 OR t.flagDeleted IS NULL AND(z.flagDeleted = 0 OR z.flagDeleted IS NULL)");
 
 	    if (marca != null && !marca.isEmpty()) {
 	        queryStr.append(" AND LOWER(z.marca) LIKE LOWER(:marca)");
@@ -302,4 +330,60 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 			return null;
 		}
 	}
+	
+	@Override
+	public TMoto insertMoto(TMoto moto) {
+		if (moto == null) {
+			throw new IllegalArgumentException("Oggetto auto nullo");
+		}
+		moto.setFlagDeleted(0);
+		em.persist(moto);
+		return moto;
+	}
+	
+	@Override
+	public TMoto findByMotoId(Integer motoId) {
+		String query = "SELECT t FROM TMoto t WHERE t.motoId = :motoId AND(t.flagDeleted = 0 OR t.flagDeleted IS NULL) ";
+
+		TypedQuery<TMoto> str = em.createQuery(query, TMoto.class);
+		str.setParameter("motoId", motoId);
+
+		List<TMoto> results = str.getResultList();
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	@Override
+	public TMezzo findMezzoByMotoId(Integer motoId) {
+		String query = "SELECT t FROM TMezzo t WHERE t.motoId = :motoId AND(t.flagDeleted = 0 OR t.flagDeleted IS NULL) ";
+
+		TypedQuery<TMezzo> str = em.createQuery(query, TMezzo.class);
+		str.setParameter("motoId", motoId);
+
+		List<TMezzo> results = str.getResultList();
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	@Override
+	public TMoto updateMoto(TMoto moto) {
+		if (moto == null || moto.getMotoId() == null) {
+			throw new IllegalArgumentException("Oggetto auto nullo");
+		}
+
+		em.merge(moto);
+		return moto;
+	}
+	
+	@Override
+	public List<TMoto> findAllMoto() {
+		String query = "SELECT t FROM TMoto t WHERE t.flagDeleted = 0 OR t.flagDeleted IS NULL";
+
+		TypedQuery<TMoto> str = em.createQuery(query, TMoto.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
 }
