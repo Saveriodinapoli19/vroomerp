@@ -8,11 +8,12 @@
   
   /* Box riepilogo */
   .stats-boxes {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colonne fisse */
     gap: 1.5rem;
     margin-bottom: 2rem;
-    flex-wrap: wrap;
   }
+  
   
   .stat-box {
     flex: 1;
@@ -44,16 +45,16 @@
     flex-wrap: wrap;
   }
   
-  .latest-users, .latest-auto {
+  .latest-users, .latest-auto,.latest-moto  {
     flex: 1;
     min-width: 250px;
   }
-  
+  .latest-moto h4,
   .latest-users h4,
   .latest-auto h4 {
     margin-bottom: 0.5rem;
   }
-  
+  .latest-moto ul,
   .latest-users ul,
   .latest-auto ul {
     list-style: none;
@@ -88,4 +89,89 @@
   .quick-actions button:hover {
     background-color: #19d2d2;
   }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stat-block {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+  }
+  
+  .stat-box {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .stat-box h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .stat-box p {
+    color: #666;
+    margin-top: 0.4rem;
+  }
+  
+  .stat-list h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .stat-list ul {
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0;
+  }
+  
+  .stat-list li {
+    font-size: 0.95rem;
+    padding: 2px 0;
+  }
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .list-header h4 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
+  .list-header button {
+    background-color: #19d2d2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .list-header button:hover {
+    background-color: #17bdbd;
+  }
+
   

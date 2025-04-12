@@ -731,3 +731,118 @@ body {
     color: red;
   }
   
+  .toast-conferma {
+    width: 1000px;
+    font-size: 30px;
+    font-weight: 500;
+  }
+  
+  .toast-conferma-buttons button {
+    padding: 6px 14px;
+    border-radius: 10px;
+  }
+  
+  .form-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+  }
+  
+  input:focus,
+  select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .submit-button {
+    width: 100%;
+    background-color: #00c7b7;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #00a59c;
+  }
+  
+  .custom-toast {
+    width: 400px !important;        /* Aumenta larghezza */
+    min-height: 100px !important;   /* Aumenta altezza */
+    font-size: 1.2rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* ✅ Posizionamento al centro e più in basso */
+    position: fixed !important;
+    top: 1000% !important;             /* Più in basso rispetto a top-center */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 9999;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .custom-toast-body {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+  
+  .cart-btn {
+    background-color: #00c4b3;
+    color: white;
+    margin-left: 6px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .cart-btn:hover {
+    background-color: #009f94;
+  }
+  

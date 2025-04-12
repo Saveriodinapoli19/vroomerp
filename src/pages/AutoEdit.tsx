@@ -123,7 +123,7 @@ const AutoEdit: React.FC = () => {
           {tipiAuto.map(t => <option key={t.tipoAutoId} value={t.tipoAutoId}>{t.descrizione}</option>)}
         </select>
 
-        <button type="submit">Salva Modifiche</button>
+        <button type="submit">💾 Salva</button>
         {error && <p className="error-text">{error}</p>}
       </form>
     </div>

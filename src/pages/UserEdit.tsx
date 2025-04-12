@@ -58,7 +58,7 @@ const UserEdit: React.FC = () => {
         <input placeholder="Cognome" value={cognome} onChange={e => setCognome(e.target.value)} required />
         <input placeholder="Telefono" value={telefono} onChange={e => setTelefono(e.target.value)} required />
         <input type="password" placeholder="Nuova Password (opzionale)" value={password} onChange={e => setPassword(e.target.value)} />
-        <button type="submit">Salva</button>
+        <button type="submit">💾 Salva</button>
       </form>
     </div>
   );
