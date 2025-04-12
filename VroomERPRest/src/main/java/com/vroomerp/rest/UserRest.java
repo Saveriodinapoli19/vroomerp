@@ -69,10 +69,10 @@ public class UserRest {
 			user.setCognome(request.getUserBean().getCognome());
 			user.setEmail(request.getUserBean().getEmail());
 			user.setTelefono(request.getUserBean().getTelefono());
-//			String hashed = PasswordUtil.encodePassword(request.getUserBean().getPassword());
-//			user.setPassword(hashed);
-			String hashedPassword = Md5Generator.convertPass(request.getUserBean().getPassword());
-			user.setPassword(hashedPassword);
+			String hashed = PasswordUtil.encodePassword(request.getUserBean().getPassword());
+			user.setPassword(hashed);
+//			String hashedPassword = Md5Generator.convertPass(request.getUserBean().getPassword());
+//			user.setPassword(hashedPassword);
 
 			TRuoloUtente ruolo = userEJB.findByRuoloId(request.getUserBean().getExtRuoloUtenteId());
 			if (ruolo == null) {
@@ -164,8 +164,10 @@ public class UserRest {
 			}
 
 			if (request.getUserBean().getPassword() != null && !request.getUserBean().getPassword().isEmpty()) {
-				String hashedPassword = Md5Generator.convertPass(request.getUserBean().getPassword());
-				user.setPassword(hashedPassword);
+//				String hashedPassword = Md5Generator.convertPass(request.getUserBean().getPassword());
+//				user.setPassword(hashedPassword);
+				String hashed = PasswordUtil.encodePassword(request.getUserBean().getPassword());
+				user.setPassword(hashed);
 			}
 
 			userEJB.updateUser(user);

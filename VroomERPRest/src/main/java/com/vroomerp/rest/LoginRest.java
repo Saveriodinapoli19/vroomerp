@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.vroomerp.common.dto.auth.LoginRequest;
 import com.vroomerp.common.dto.basic.BasicResponse;
 import com.vroomerp.common.util.PasswordUtil;
@@ -47,17 +49,47 @@ public class LoginRest {
 	        return Response.ok(response).build();
 	    }
 
-	    if (!PasswordUtil.checkPassword(request.getPassword(), user.getPassword())) {
+	    String inputPassword = request.getPassword();
+	    String storedPassword = user.getPassword();
+
+	    boolean validPassword = false;
+
+	    // Se la password in DB è BCryptata (inizia con $2a$)
+	    if (storedPassword != null && storedPassword.startsWith("$2a$")) {
+	        validPassword = PasswordUtil.checkPassword(inputPassword, storedPassword);
+	    } else {
+	        // fallback MD5 per utenti vecchi
+	        String hashedInput = org.apache.commons.codec.digest.DigestUtils.md5Hex(inputPassword);
+	        validPassword = hashedInput.equalsIgnoreCase(storedPassword);
+
+	        // se è giusta, aggiorna a BCRYPT
+	        if (validPassword) {
+	            String bcrypt = PasswordUtil.createPassword(inputPassword);
+	            user.setPassword(bcrypt);
+	            userEJB.updateUser(user); // salva la nuova password
+	        }
+	    }
+
+	    if (!validPassword) {
 	        response.setErrorCode(99);
 	        response.setErrorMessage("Credenziali errate");
 	        return Response.ok(response).build();
 	    }
 
+	    
+	  
 	    String token = JwtUtil.generateToken(user);
 
 
-	    Map<String, String> result = new HashMap<>();
+	    Map<String, Object> result = new HashMap<>();
 	    result.put("token", token);
+
+	    Map<String, Object> utente = new HashMap<>();
+	    utente.put("id", user.getUserId());
+	    utente.put("email", user.getEmail());
+	    utente.put("extRuoloUtenteId", user.getExtRuoloUtenteId()); // o il nome corretto del campo
+
+	    result.put("utente", utente);
 
 	    return Response.ok(result).build();
 	}

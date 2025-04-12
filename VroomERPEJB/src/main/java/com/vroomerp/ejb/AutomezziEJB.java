@@ -319,6 +319,45 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 	}
 	
 	@Override
+	public List<TTipoMoto> findAllTipoMoto() {
+		String query = "SELECT t FROM TTipoMoto t ";
+
+		TypedQuery<TTipoMoto> str = em.createQuery(query, TTipoMoto.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<TTipoMotore> findAllTipoMotore() {
+		String query = "SELECT t FROM TTipoMotore t ";
+
+		TypedQuery<TTipoMotore> str = em.createQuery(query, TTipoMotore.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<TTipoRimorchio> findAllTipoRimorchio() {
+		String query = "SELECT t FROM TTipoRimorchio t ";
+
+		TypedQuery<TTipoRimorchio> str = em.createQuery(query, TTipoRimorchio.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
 	public List<TMotoreEuro> findAllMotoreEuro() {
 		String query = "SELECT t FROM TMotoreEuro t ";
 
@@ -385,5 +424,83 @@ public class AutomezziEJB implements AutomezziEJBInterface {
 			return null;
 		}
 	}
+	
+	@Override
+	public TTir insertTir(TTir tir) {
+		if (tir == null) {
+			throw new IllegalArgumentException("Oggetto auto nullo");
+		}
+		tir.setFlagDeleted(0);
+		em.persist(tir);
+		return tir;
+	}
+	
+	@Override
+	public TTipoRimorchio findByRimorchioId(Integer tipoRimorchioId) {
+		String query = "SELECT t FROM TTipoRimorchio t WHERE t.tipoRimorchioId = :tipoRimorchioId  ";
 
+		TypedQuery<TTipoRimorchio> str = em.createQuery(query, TTipoRimorchio.class);
+		str.setParameter("tipoRimorchioId", tipoRimorchioId);
+
+		List<TTipoRimorchio> results = str.getResultList();
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	@Override
+	public TTir findByTirId(Integer tirId) {
+		String query = "SELECT t FROM TTir t WHERE t.tirId = :tirId AND(t.flagDeleted = 0 OR t.flagDeleted IS NULL) ";
+
+		TypedQuery<TTir> str = em.createQuery(query, TTir.class);
+		str.setParameter("tirId", tirId);
+
+		List<TTir> results = str.getResultList();
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	@Override
+	public TMezzo findMezzoByTirId(Integer tirId) {
+		String query = "SELECT t FROM TMezzo t WHERE t.tirId = :tirId AND(t.flagDeleted = 0 OR t.flagDeleted IS NULL) ";
+
+		TypedQuery<TMezzo> str = em.createQuery(query, TMezzo.class);
+		str.setParameter("tirId", tirId);
+
+		List<TMezzo> results = str.getResultList();
+		return results.isEmpty() ? null : results.get(0);
+	}
+	
+	@Override
+	public TTir updateTir(TTir tir) {
+		if (tir == null || tir.getTirId() == null) {
+			throw new IllegalArgumentException("Oggetto auto nullo");
+		}
+
+		em.merge(tir);
+		return tir;
+	}
+	
+	@Override
+	public List<TTir> findAllTir() {
+		String query = "SELECT t FROM TTir t WHERE t.flagDeleted = 0 OR t.flagDeleted IS NULL";
+
+		TypedQuery<TTir> str = em.createQuery(query, TTir.class);
+
+		try {
+			return str.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public TTir deleteTir(TTir tir) {
+		tir.setFlagDeleted(1);
+		em.merge(tir);
+		TMezzo mezzo = findMezzoByTirId(tir.getTirId());
+		if (mezzo != null) {
+			mezzo.setFlagDeleted(1);
+			em.merge(mezzo);
+		}
+
+		return tir;
+	}
 }

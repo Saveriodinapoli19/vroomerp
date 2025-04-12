@@ -41,6 +41,8 @@ public class TTir implements Serializable {
 
 	@Column(name="flag_deleted")
 	private Integer flagDeleted;
+
+	private String cilindrata;
 	
 	public TTir() {
 	}
@@ -115,6 +117,14 @@ public class TTir implements Serializable {
 
 	public void setFlagDeleted(Integer flagDeleted) {
 		this.flagDeleted = flagDeleted;
+	}
+
+	public String getCilindrata() {
+		return cilindrata;
+	}
+
+	public void setCilindrata(String cilindrata) {
+		this.cilindrata = cilindrata;
 	}
 
 	

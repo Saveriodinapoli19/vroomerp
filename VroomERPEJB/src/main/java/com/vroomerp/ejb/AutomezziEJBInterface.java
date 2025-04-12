@@ -71,6 +71,26 @@ public interface AutomezziEJBInterface {
 	List<TMoto> findAllMoto();
 
 	TMoto deleteMoto(TMoto moto);
+
+	List<TTipoMoto> findAllTipoMoto();
+
+	List<TTipoMotore> findAllTipoMotore();
+
+	TTir insertTir(TTir tir);
+
+	TTipoRimorchio findByRimorchioId(Integer tipoRimorchioId);
+
+	List<TTipoRimorchio> findAllTipoRimorchio();
+
+	TTir findByTirId(Integer tirId);
+
+	TMezzo findMezzoByTirId(Integer tirId);
+
+	TTir updateTir(TTir tir);
+
+	List<TTir> findAllTir();
+
+	TTir deleteTir(TTir tir);
 	
 	
 	

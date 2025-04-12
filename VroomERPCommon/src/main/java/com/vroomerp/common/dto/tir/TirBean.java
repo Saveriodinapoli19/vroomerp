@@ -1,5 +1,7 @@
 package com.vroomerp.common.dto.tir;
 
+import com.vroomerp.common.dto.mezzo.MezzoBean;
+
 public class TirBean {
 
 
@@ -8,11 +10,15 @@ public class TirBean {
 	private String altezzaCassone;
 
 	private Integer extMotoreEuroId;
+	private String motoreEuro;
 
 	private Integer extTipoAlimentazioneId;
+	private String alimentazione;
 
 	private Integer extTipoRimorchioId;
-
+	private String rimorchio;
+	
+	
 	private Double lunghezza;
 
 	private Integer numeroAssi;
@@ -22,6 +28,9 @@ public class TirBean {
 	private String cilindrata;
 	
 	private Integer flagDeleted;
+	
+	private MezzoBean mezzoBean;
+	
 	
 	public Integer getTirId() {
 		return tirId;
@@ -101,6 +110,38 @@ public class TirBean {
 
 	public void setFlagDeleted(Integer flagDeleted) {
 		this.flagDeleted = flagDeleted;
+	}
+
+	public MezzoBean getMezzoBean() {
+		return mezzoBean;
+	}
+
+	public void setMezzoBean(MezzoBean mezzoBean) {
+		this.mezzoBean = mezzoBean;
+	}
+
+	public String getMotoreEuro() {
+		return motoreEuro;
+	}
+
+	public void setMotoreEuro(String motoreEuro) {
+		this.motoreEuro = motoreEuro;
+	}
+
+	public String getAlimentazione() {
+		return alimentazione;
+	}
+
+	public void setAlimentazione(String alimentazione) {
+		this.alimentazione = alimentazione;
+	}
+
+	public String getRimorchio() {
+		return rimorchio;
+	}
+
+	public void setRimorchio(String rimorchio) {
+		this.rimorchio = rimorchio;
 	}
 	
 	
