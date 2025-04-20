@@ -13,6 +13,7 @@
     <class>com.vroomerp.model.TTipoRimorchio</class>
     <class>com.vroomerp.model.TTir</class>
     <class>com.vroomerp.model.TTipoMotore</class>
+    <class>com.vroomerp.model.TAcquisti</class>
 
     <!-- Le classi entità verranno aggiunte qui -->
 

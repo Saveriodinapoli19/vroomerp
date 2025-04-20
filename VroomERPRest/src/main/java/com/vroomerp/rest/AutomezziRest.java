@@ -72,11 +72,11 @@ import io.jsonwebtoken.lang.Strings;
 public class AutomezziRest {
 
 	private static final Logger logger = Logger.getLogger(UserRest.class.getName());
+	// TVeicoloGruppo/TVeicoloGruppoMezzo creare tabella e informarsi/pensare in che
+	// modo utilizzarla
 
 	@EJB
 	UserEJBInterface userEJB;
-	// TVeicoloGruppo/TVeicoloGruppoMezzo creare tabella e informarsi/pensare in che
-	// modo utilizzarla
 
 	@EJB
 	AutomezziEJBInterface automezziEJB;
