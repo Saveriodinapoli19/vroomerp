@@ -71,3 +71,28 @@
     font-size: 0.95rem;
   }
   
+  .mezzo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 6px 0;
+    padding: 4px 0;
+    gap: 12px;
+  }
+  
+  .mezzo-item button {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background-color: #00cfd5;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+  }
+  
+  .mezzo-item button:hover {
+    background-color: #00b0b5;
+  }
+  

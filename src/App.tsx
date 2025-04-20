@@ -16,6 +16,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import TirDetail from './pages/TirDetail';
 import TirCreate from './pages/TirCreate';
 import TirEdit from './pages/TirEdit';
+import AcquistiPages from './pages/AcquistiPages';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -83,6 +84,7 @@ const App: React.FC = () => {
         <Route path="/moto/edit/:motoId" element={<MotoEdit />} />
         <Route path="/tir/new" element={<TirCreate />} />
         <Route path="/tir/edit/:tirId" element={<TirEdit />} />
+        <Route path="/acquisti" element={<AcquistiPages/>} />
         <Route path="*" element={<Login />} />
       </Routes>
     </Router>

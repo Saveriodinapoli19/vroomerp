@@ -534,7 +534,7 @@ body {
     padding: 1rem 2rem;
     border-bottom: 1px solid #ccc;
   }
-  
+
   .user-info {
     font-weight: bold;
     font-size: 1.1rem;
@@ -558,6 +558,24 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .acquisti-btn {
+    padding: 0.5rem 1rem;
+    background-color: #dc35c6;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .acquisti-btn:hover {
+    padding: 0.5rem 1rem;
+    background-color: #dc35c6;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   /* Main layout: sidebar + content */
   .main-layout {
     display: flex;
@@ -571,6 +589,19 @@ body {
     background: #ffffff;
     border-right: 1px solid #ccc;
     padding: 1rem;
+  }
+
+  .sidebar-left2 {
+    width: 200px;
+    background: #ffffff;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Spinge l’ultimo elemento in basso */
+  height: 100%;
+  padding: 20px;
   }
   
   .menu-item {

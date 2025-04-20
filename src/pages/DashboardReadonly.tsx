@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import DashboardEnhancementsReadonly from './DashboardEnhancementsReadonly';
 import { toast } from 'react-toastify';
+import { handleAcquisto } from '../api/acquistoUtils';
 
 interface MezzoBean {
   mezzoId: number;
@@ -32,7 +33,11 @@ interface Tir {
   mezzoBean?: MezzoBean;
 }
 
- 
+interface Acquisti {
+  acquistiId: number;
+  mezzoBean?: MezzoBean;
+}
+
 
 const Dashboard: React.FC = () => {
   const [auto, setAuto] = useState<Auto[]>([]);
@@ -54,7 +59,7 @@ const Dashboard: React.FC = () => {
       return '';
     }
   };
-
+ 
   const nomeUtente = getNomeUtenteFromToken();
 
   useEffect(() => {
@@ -65,7 +70,7 @@ const Dashboard: React.FC = () => {
       .then(res => setAuto(res.data.autoBeanList || []))
       .catch(() => { });
 
-      axios.get('/automezzi/findAllTir')
+    axios.get('/automezzi/findAllTir')
       .then(res => setTir(res.data.tirBeanList || []))
       .catch(() => { });
 
@@ -79,15 +84,65 @@ const Dashboard: React.FC = () => {
     navigate('/login');
   };
 
+  const handleCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get('/acquisti/findAcquistiByUserId', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      const data = res.data;
+  
+      if (data.errorCode === 0 && Array.isArray(data.acquistiBeanList)) {
+        const acquisti = data.acquistiBeanList;
+        const totale = data.spesaTotale;
+  
+        if (acquisti.length === 0) {
+          toast.info("🛒 Nessun acquisto effettuato.");
+        } else {
+          toast.info(
+            <div style={{ lineHeight: '1.6' }}>
+              <strong>🧾 Riepilogo Acquisti:</strong>
+              <ul>
+                {acquisti.slice(0, 3).map((a: any, i: number) => (
+                  <li key={i}>
+                    {a.autoBean?.mezzoBean?.modello ||
+                     a.motoBean?.mezzoBean?.modello ||
+                     a.tirBean?.mezzoBean?.modello || 'Mezzo'} - 
+                    € {a.autoBean?.mezzoBean?.prezzo || 
+                        a.motoBean?.mezzoBean?.prezzo || 
+                        a.tirBean?.mezzoBean?.prezzo}
+                  </li>
+                ))}
+              </ul>
+              <div><strong>Totale:</strong> € {totale}</div>
+            </div>,
+            { autoClose: false, position: "top-center" }
+          );
+        }
+      } else {
+        toast.error(`⚠️ ${data.errorMessage || 'Errore durante il recupero acquisti'}`);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("❌ Errore di rete durante il recupero degli acquisti.");
+    }
+  };
+  
+
   return (
     <div className="dashboard-wrapper">
       <div className="top-bar">
         <div className="user-info">Benvenuto, {nomeUtente}</div>
         <button className="logout-btn" onClick={handleLogout}>Logout</button>
+      
       </div>
+     
 
       <div className="main-layout">
-        <div className="sidebar-left">
+        <div className="sidebar-left2">
           <h3 onClick={() => setShowAuto(!showAuto)} className="menu-item">
             {showAuto ? '▼' : '▶'} Automezzi
           </h3>
@@ -97,20 +152,41 @@ const Dashboard: React.FC = () => {
           <h3 onClick={() => setShowTir(!showTir)} className="menu-item">
             {showTir ? '▼' : '▶'} Tir
           </h3>
+          <hr style={{ margin: '15px 0' }} />
+          <button
+    onClick={() => navigate('/acquisti')}
+    style={{
+      backgroundColor: '#dc35c6',
+      color: 'white',
+      border: 'none',
+      padding: '10px 15px',
+      borderRadius: '6px',
+      fontSize: '15px',
+      cursor: 'pointer',
+      width: '100%',
+      marginTop: 'auto'
+    }}
+  >
+    📋 Visualizza Acquisti
+  </button>
+
         </div>
         <DashboardEnhancementsReadonly
           autoCount={auto.length}
           motoCount={moto.length}
           tirCount={tir.length}
           latestAuto={auto.slice(-3).reverse().map(a => ({
+            id: a.autoId,
             modello: a.mezzoBean?.modello || '',
             targa: a.mezzoBean?.targa || ''
           }))}
           latestMoto={moto.slice(-3).reverse().map(m => ({
+            id: m.motoId,
             modello: m.mezzoBean?.modello || '',
             targa: m.mezzoBean?.targa || ''
           }))}
-          latestTir = {tir.slice(-3).reverse().map(t => ({
+          latestTir={tir.slice(-3).reverse().map(t => ({
+            id: t.tirId,
             modello: t.mezzoBean?.modello || '',
             targa: t.mezzoBean?.targa || ''
           }))}
@@ -136,7 +212,7 @@ const Dashboard: React.FC = () => {
                         <Link to={`/auto/${a.autoId}`}>
                           <button className="view-btn"><FontAwesomeIcon icon={faEye} /></button>
                         </Link>
-                        <button className="cart-btn" onClick={() => toast.info("🚧 Acquisto non ancora disponibile")}>
+                        <button className="cart-btn" onClick={() => handleAcquisto('auto', a.autoId)}>
                           <FontAwesomeIcon icon={faCartShopping} />
                         </button>
                       </td>
@@ -168,7 +244,7 @@ const Dashboard: React.FC = () => {
                         <Link to={`/moto/${m.motoId}`}>
                           <button className="view-btn"><FontAwesomeIcon icon={faEye} /></button>
                         </Link>
-                        <button className="cart-btn" onClick={() => toast.info("🚧 Acquisto non ancora disponibile")}>
+                        <button className="cart-btn" onClick={() => handleAcquisto('moto', m.motoId)}>
                           <FontAwesomeIcon icon={faCartShopping} />
                         </button>
 
@@ -181,7 +257,7 @@ const Dashboard: React.FC = () => {
           </div>
         )}
 
-{showTir && (
+        {showTir && (
           <div className="floating-overlay">
             <div className="floating-user-box expanded">
               <div className="box-header">
@@ -201,7 +277,7 @@ const Dashboard: React.FC = () => {
                         <Link to={`/tir/${m.tirId}`}>
                           <button className="view-btn"><FontAwesomeIcon icon={faEye} /></button>
                         </Link>
-                        <button className="cart-btn" onClick={() => toast.info("🚧 Acquisto non ancora disponibile")}>
+                        <button className="cart-btn" onClick={() => handleAcquisto('tir', m.tirId)}>
                           <FontAwesomeIcon icon={faCartShopping} />
                         </button>
 
@@ -214,6 +290,7 @@ const Dashboard: React.FC = () => {
           </div>
         )}
       </div>
+      
     </div>
   );
 };
